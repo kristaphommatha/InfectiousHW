@@ -12,7 +12,7 @@ def equation(r, R0):
 def find_intersection(R0_array):
     intersect_list = []
     for R0 in R0_array:
-        initial_guess = [0.25, 0.25]
+        initial_guess = [0.5, 0.5]
         intersect = fsolve(equation, initial_guess, args=(R0,))
         intersect_list.append(intersect)
     return intersect_list
@@ -70,7 +70,7 @@ def main():
     axes[1,1].set_title('R0 = 1.2')
     axes[1,1].spines[['right', 'top']].set_visible(False)
     
-    plt.savefig('Q3.png',dpi=100)
+    plt.savefig('Q3b.png',dpi=100)
 
 
 if __name__ == '__main__':
