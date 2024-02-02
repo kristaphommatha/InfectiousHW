@@ -28,3 +28,39 @@ def get_SIR_model(S0, I0, N, beta, gamma, t_frame):
         R.append(N - curr_S - curr_I)
 
     return S, I, R
+
+
+def plot_SIR(S, I, R, t_frame, beta, gamma, fig_title):
+    t_plot = list(range(0, t_frame + 1, 1))
+
+    fig, ax = plt.subplots()
+    ax.plot(t_plot,S,label='S Krista')
+    ax.plot(t_plot,I,label='I Krista')
+    ax.plot(t_plot,R,label='R Krista')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Population')
+    ax.set_title(f'SIR Model (beta = {beta}, gamma = {gamma})')
+    ax.legend(loc='lower right')
+    plt.savefig(fig_title,dpi=300)
+
+
+def main():
+    S0 = 999
+    I0 = 1
+    N = 1000
+    t_frame = 50
+
+    solns1 = get_SIR_model(S0, I0, N, 1, 0.5, t_frame)
+    solns2 = get_SIR_model(S0, I0, N, 1.5, 0.5, t_frame)
+    solns3 = get_SIR_model(S0, I0, N, 2, 0.5, t_frame)
+
+    plot_SIR(solns1[0], solns1[1], solns1[2],
+             t_frame, 1, 0.5, 'SIR1.png')
+    plot_SIR(solns2[0], solns2[1], solns2[2],
+             t_frame, 1.5, 0.5, 'SIR2.png')
+    plot_SIR(solns3[0], solns3[1], solns3[2],
+             t_frame, 2, 0.5, 'SIR3.png')
+
+
+if __name__ == '__main__':
+    main()
