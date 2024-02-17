@@ -52,6 +52,7 @@ def plot_Q1a(e_i, a_i, beta, gamma, t_frame, delta_t, fig_title):
     ax.plot(t_plot,a_i,label='Analytical',color='black',linestyle='--')
     ax.set_xlabel('Time')
     ax.set_ylabel('i(t)')
+    ax.set_ylim(0,0.5)
     ax.set_title(f'Normalized SIS Model, delta_t = {delta_t}')
     ax.legend(loc='lower right')
     plt.savefig(fig_title,dpi=100)
