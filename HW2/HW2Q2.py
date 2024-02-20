@@ -87,8 +87,8 @@ def main():
     betas = [3, 4, 5]
     gamma = 1
     N = 300000
-    t_frame = 25
-    delta_t = 0.5
+    t_frame = 10
+    delta_t = 0.25
     
     I0 = 300
     V0 = 150000
