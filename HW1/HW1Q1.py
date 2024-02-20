@@ -39,7 +39,7 @@ def plot_SIR(S, I, R, t_frame, beta, gamma, fig_title):
     ax.plot(t_plot,R,label='R Krista')
     ax.set_xlabel('Time')
     ax.set_ylabel('Population')
-    ax.set_title(f'Q1. SIR Model (beta = {beta}, gamma = {gamma})')
+    ax.set_title(fig_title)
     ax.legend(loc='lower right')
     plt.savefig(fig_title,dpi=100)
 
