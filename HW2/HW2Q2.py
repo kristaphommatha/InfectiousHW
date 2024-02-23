@@ -65,21 +65,35 @@ def get_leaky(S0, I0, V0, N, VE, beta, gamma, t_frame, delta_t):
     return S, I, R
 
 
-def plot_vax_SIR(S, I, R, t_frame, delta_t, fig_title, file_name):
+def plot_vax_SIR(ANM, leaky, t_frame, delta_t, R0, file_name):
     t = 0
     t_plot = [t]
     while t <= t_frame:
         t_plot.append(t)
         t = t + delta_t
 
-    fig, ax = plt.subplots()
-    ax.plot(t_plot,S,label='S')
-    ax.plot(t_plot,I,label='I')
-    ax.plot(t_plot,R,label='R')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Population')
-    ax.set_title(fig_title)
-    ax.legend(loc='lower right')
+    fig, axes = plt.subplots(1,2)
+    fig.set_size_inches(12.5, 5)
+    axes[0].plot(t_plot,ANM[0],label='S')
+    axes[0].plot(t_plot,ANM[1],label='I')
+    axes[0].plot(t_plot,ANM[2],label='R')
+    axes[0].set_xlabel('Time')
+    axes[0].set_ylabel('Population')
+    axes[0].set_title(f'ANM, R0 = {R0}')
+    axes[0].legend(loc='lower right')
+    axes[0].spines[['right', 'top']].set_visible(False)
+    axes[0].set_ylim(0,max(leaky[2])+1000)
+
+    axes[1].plot(t_plot,leaky[0],label='S')
+    axes[1].plot(t_plot,leaky[1],label='I')
+    axes[1].plot(t_plot,leaky[2],label='R')
+    axes[1].set_xlabel('Time')
+    axes[1].set_ylabel('Population')
+    axes[1].set_title(f'Leaky Model, R0 = {R0}')
+    axes[1].legend(loc='lower right')
+    axes[1].spines[['right', 'top']].set_visible(False)
+    axes[1].set_ylim(0,max(leaky[2])+1000)
+    
     plt.savefig(file_name,dpi=100)
 
 
@@ -87,7 +101,7 @@ def main():
     betas = [3, 4, 5]
     gamma = 1
     N = 300000
-    t_frame = 10
+    t_frame = 20
     delta_t = 0.25
     
     I0 = 300
@@ -98,10 +112,9 @@ def main():
     for beta in betas:
         anm_solns = get_ANM(S0, I0, V0, N, VE, beta, gamma, t_frame, delta_t)
         leaky_solns = get_leaky(S0, I0, V0, N, VE, beta, gamma, t_frame, delta_t)
-        R0 = beta/gamma
+        R0 = int(beta/gamma)
 
-        plot_vax_SIR(anm_solns[0], anm_solns[1], anm_solns[2], t_frame, delta_t, f'ANM, R0 = {int(R0)}', f'ANM_R0_{int(R0)}.png')
-        plot_vax_SIR(leaky_solns[0], leaky_solns[1], leaky_solns[2], t_frame, delta_t, f'Leaky Model, R0 = {int(R0)}', f'Leaky_R0_{int(R0)}.png')
+        plot_vax_SIR(anm_solns,leaky_solns,t_frame,delta_t,R0,f'Q2c_R0-{R0}.png')
 
 
 if __name__ == '__main__':
