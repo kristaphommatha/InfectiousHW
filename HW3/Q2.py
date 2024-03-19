@@ -68,13 +68,40 @@ def Q2plotting(results, delta_t, t_frame, y_axis_title, fig_title, file_name):
     plt.savefig(file_name,dpi=100)
 
 
+def get_p_bar(p, s, delta_t, t_frame):
+    p_bar = []
+    for si in s:
+        num = np.sum(np.multiply(p,si))
+        den = np.sum(si)
+        p_bar.append(num/den)
+    return p_bar
+
+
+def plot_p_bar(p, s, delta_t, t_frame):
+    p_bar = get_p_bar(p,s,delta_t,t_frame)
+
+    t_plot = [0]
+    t = 0
+    while t <= t_frame:
+        t_plot.append(t)
+        t = t + delta_t
+
+    fig, ax = plt.subplots()
+    ax.plot(t_plot,p_bar,color='black')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('p_bar')
+    ax.set_title('Weighted Avg. of Susceptibilities')
+    plt.savefig('Q2d_p.png',dpi=100)
+
+
 def main():
     c_bar = 0.45
+    p = np.array([[1],[2],[3],[4]])
     s0 = np.full((4,1),0.999/4)
     i0 = np.full((4,1),0.001/4)
     r0 = np.full((4,1),0)
 
-    Dp = np.array([[1,0,0,0],[0,2,0,0],[0,0,3,0],[0,0,0,4]])
+    Dp = np.diag(p.flatten())
     Ds0 = np.diag(s0.flatten())
     Dw_inv = np.array([[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,4]])
     Dy = np.array([[3,0,0,0],[0,3,0,0],[0,0,3,0],[0,0,0,3]])
@@ -88,6 +115,7 @@ def main():
 
     Q2plotting(i_res,delta_t,t_frame,'Infectioned Population Proportion','Infections vs. Time','Q2c.png')
     Q2plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceiptibles vs. Time','Q2d_s.png')
+    plot_p_bar(p,s_res,delta_t,t_frame)
 
 
 if __name__ == '__main__':
