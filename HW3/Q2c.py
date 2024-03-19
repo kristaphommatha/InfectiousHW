@@ -82,7 +82,7 @@ def main():
     ax.set_ylabel('Infected Population Proportion')
     ax.set_title('Infections vs. Time')
     ax.legend(loc='lower right')
-    plt.savefig('Q2.png',dpi=100)
+    plt.savefig('Q2c.png',dpi=100)
 
 
 if __name__ == '__main__':
