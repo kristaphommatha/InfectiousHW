@@ -64,7 +64,7 @@ def Q2plotting(results, delta_t, t_frame, y_axis_title, fig_title, file_name):
     ax.set_xlabel('Time')
     ax.set_ylabel(y_axis_title)
     ax.set_title(fig_title)
-    ax.legend(loc='lower right')
+    ax.legend(loc='upper right')
     plt.savefig(file_name,dpi=100)
 
 
