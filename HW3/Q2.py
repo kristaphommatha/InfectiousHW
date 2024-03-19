@@ -39,6 +39,35 @@ def get_sir_compartmental(s0, i0, r0, Dp, Ds0, C, Dw_inv, Dy, delta_t, t_frame):
     return s_pts, i_pts, r_pts
 
 
+def Q2plotting(results, delta_t, t_frame, y_axis_title, fig_title, file_name):
+    t_plot = [0]
+    t = 0
+    while t <= t_frame:
+        t_plot.append(t)
+        t = t + delta_t
+
+    x1 = []
+    x2 = []
+    x3 = []
+    x4 = []
+    for x in results:
+        x1.append(x[0].item())
+        x2.append(x[1].item())
+        x3.append(x[2].item())
+        x4.append(x[3].item())
+
+    fig, ax = plt.subplots()
+    ax.plot(t_plot,x1,color='#b7dde6',label='Group 1')
+    ax.plot(t_plot,x2,color='#92d1e0',label='Group 2')
+    ax.plot(t_plot,x3,color='#41a6be',label='Group 3')
+    ax.plot(t_plot,x4,color='#0e697f',label='Group 4')
+    ax.set_xlabel('Time')
+    ax.set_ylabel(y_axis_title)
+    ax.set_title(fig_title)
+    ax.legend(loc='lower right')
+    plt.savefig(file_name,dpi=100)
+
+
 def main():
     c_bar = 0.45
     s0 = np.full((4,1),0.999/4)
@@ -57,32 +86,8 @@ def main():
                                                 Dp, Ds0, C, Dw_inv, Dy,
                                                 delta_t, t_frame)
 
-    t_plot = [0]
-    t = 0
-    while t <= t_frame:
-        t_plot.append(t)
-        t = t + delta_t
-
-    i1 = []
-    i2 = []
-    i3 = []
-    i4 = []
-    for x in i_res:
-        i1.append(x[0].item())
-        i2.append(x[1].item())
-        i3.append(x[2].item())
-        i4.append(x[3].item())
-
-    fig, ax = plt.subplots()
-    ax.plot(t_plot,i1,color='#b7dde6',label='Group 1')
-    ax.plot(t_plot,i2,color='#92d1e0',label='Group 2')
-    ax.plot(t_plot,i3,color='#41a6be',label='Group 3')
-    ax.plot(t_plot,i4,color='#0e697f',label='Group 4')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Infected Population Proportion')
-    ax.set_title('Infections vs. Time')
-    ax.legend(loc='lower right')
-    plt.savefig('Q2c.png',dpi=100)
+    Q2.plotting(i_res,delta_t,t_frame,'Infectioned Population Proportion','Infections vs. Time','Q2c.png')
+    Q2.plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceiptibles vs. Time','Q2d_s.png')
 
 
 if __name__ == '__main__':
