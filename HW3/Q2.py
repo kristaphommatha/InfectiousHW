@@ -90,7 +90,7 @@ def plot_p_bar(p, s, delta_t, t_frame):
     ax.plot(t_plot,p_bar,color='black')
     ax.set_xlabel('Time')
     ax.set_ylabel('p_bar')
-    ax.set_title('Weighted Avg. of Susceptibilities')
+    ax.set_title('Average Relative Susceptibility')
     plt.savefig('Q2d_p.png',dpi=100)
 
 
