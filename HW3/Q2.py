@@ -114,7 +114,7 @@ def main():
                                                 delta_t, t_frame)
 
     Q2plotting(i_res,delta_t,t_frame,'Infectioned Population Proportion','Infections vs. Time','Q2c.png')
-    Q2plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceiptibles vs. Time','Q2d_s.png')
+    Q2plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceptibles vs. Time','Q2d_s.png')
     plot_p_bar(p,s_res,delta_t,t_frame)
 
 
