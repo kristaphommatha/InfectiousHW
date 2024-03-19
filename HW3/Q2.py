@@ -86,8 +86,8 @@ def main():
                                                 Dp, Ds0, C, Dw_inv, Dy,
                                                 delta_t, t_frame)
 
-    Q2.plotting(i_res,delta_t,t_frame,'Infectioned Population Proportion','Infections vs. Time','Q2c.png')
-    Q2.plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceiptibles vs. Time','Q2d_s.png')
+    Q2plotting(i_res,delta_t,t_frame,'Infectioned Population Proportion','Infections vs. Time','Q2c.png')
+    Q2plotting(s_res,delta_t,t_frame,'Susceptible Population Proportion','Susceiptibles vs. Time','Q2d_s.png')
 
 
 if __name__ == '__main__':
