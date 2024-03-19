@@ -40,7 +40,7 @@ def main():
     R0 = 3 # Mean R0
     q_vals = []
 
-    thresh = 0.001
+    thresh = 0.0001
     I0 = 1
     num_trials = 1000
 
@@ -54,7 +54,8 @@ def main():
         q_vals.append(q)
     
     results = pd.DataFrame({'k': k_vals, 'q': q_vals})
-    results.to_excel('Q3_res.xlsx',index=False)
+    # results.to_excel('Q3_res.xlsx',index=False)
+    print(results)
 
 
 if __name__ == '__main__':
