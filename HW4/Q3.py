@@ -16,7 +16,13 @@ def load_data(files_array, column_names_array, filename):
 
 def plot_data(data, column_names_array, fig_title):
     fig, ax = plt.subplots()
-    ax.boxplot([data[column_names_array[0]],data[column_names_array[1]],data[column_names_array[2]]])
+    violins = ax.violinplot(data,showmeans=True)
+    colors = ['red','black','blue']
+    for i, violin in enumerate(violins['bodies']):
+        violin.set_facecolor(colors[i])
+    for partname in ('cbars', 'cmins', 'cmaxes', 'cmeans'):
+        vp = violins[partname]
+        vp.set_edgecolor(colors)
     ax.set_xticks([1,2,3])
     ax.set_xticklabels(column_names_array)
     ax.set_ylabel('Seroprevalance')
