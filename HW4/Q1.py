@@ -1,4 +1,8 @@
 import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 def I_from_incidence(data_file):
@@ -32,10 +36,44 @@ def I_from_incidence(data_file):
 
     data['I(t)'] = infections
     data.to_excel('data/Q1data.xlsx', index=False)
+    return(data)
+
+
+def get_exp_growth(data):
+    start_index = 0
+    end_index = data['I(t)'].idxmax()
+    exp_growth = data.iloc[start_index:end_index]
+    return exp_growth
+
+
+def plot_lin_reg(data, x, y, out_file, order=1, linReg=True):
+    fig, ax = plt.subplots()
+    ax.scatter(data[x], data[y])
+    if linReg is True:
+        m, b = np.polyfit(data[x],data[y],order)
+        ax.plot(data[x],m*data[x]+b,linestyle='--')
+    ax.set_xlabel(x)
+    ax.set_ylabel(y)
+    ax.spines[['right', 'top']].set_visible(False)
+    plt.savefig(out_file,dpi=300)
+    if linReg is True:
+        return m, b
+    else:
+        return np.nan
 
 
 def main():
-    I_from_incidence('data/all_weeks.csv')
+    data = I_from_incidence('data/all_weeks.csv')
+    plot_lin_reg(data,'Week','I(t)','Q1_IvsTime',linReg=False)
+    exp_growth = get_exp_growth(data)
+    plot_lin_reg(exp_growth,'Week','I(t)','Q1_ExpGrowthPeriod',linReg=False)
+    
+    logI = []
+    for i in exp_growth['I(t)']:
+        logI.append(np.log(i))
+    exp_growth['log(I(t))'] = logI
+    m, b = plot_lin_reg(exp_growth,'Week','log(I(t))','Q1_LinReg',linReg=True)
+    print(f'Slope = {m}, Intercept = {b}')
 
 
 if __name__ == '__main__':
