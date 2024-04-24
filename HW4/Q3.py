@@ -114,6 +114,13 @@ def main():
     plot_points_data(data, column_names_array, colors, 'Prevalence', 'figs/Q3.png', cutoff=c)
     print(f'Youden Cutoff = {c}')
 
+    se = calc_se(c,data)
+    sp = calc_sp(c,data)
+    raw_prev = calc_raw_prev(c, data)
+    corr_prev = calc_corr_prev(c, data)
+    print(f'se = {se}, sp = {sp}')
+    print(f'raw prevalance = {raw_prev}, corrected prevalence = {corr_prev}')
+
 
 if __name__ == '__main__':
     main()
