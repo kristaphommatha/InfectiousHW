@@ -17,18 +17,18 @@ def I_from_incidence(data_file):
     for i in incidence:
         if week_count == 1:
             infection_count = i
-            infections.append(infection_count)
+            infections.append(infection_count*10)
             prev_incidence[0] = i
 
         elif week_count == 2:
             infection_count = infection_count + i
-            infections.append(infection_count)
+            infections.append(infection_count*10)
             prev_incidence[1] = prev_incidence[0]
             prev_incidence[0] = i
 
         else:
             infection_count = infection_count + i - prev_incidence[1]
-            infections.append(infection_count)
+            infections.append(infection_count*10)
             prev_incidence[1] = prev_incidence[0]
             prev_incidence[0] = i
 
@@ -64,15 +64,15 @@ def plot_lin_reg(data, x, y, out_file, order=1, linReg=True):
 
 def main():
     data = I_from_incidence('data/all_weeks.csv')
-    plot_lin_reg(data,'Week','I(t)','Q1_IvsTime',linReg=False)
+    plot_lin_reg(data,'Week','I(t)','figs/Q1_IvsTime',linReg=False)
     exp_growth = get_exp_growth(data)
-    plot_lin_reg(exp_growth,'Week','I(t)','Q1_ExpGrowthPeriod',linReg=False)
+    plot_lin_reg(exp_growth,'Week','I(t)','figs/Q1_ExpGrowthPeriod',linReg=False)
     
     logI = []
     for i in exp_growth['I(t)']:
         logI.append(np.log(i))
     exp_growth['log(I(t))'] = logI
-    m, b = plot_lin_reg(exp_growth,'Week','log(I(t))','Q1_LinReg',linReg=True)
+    m, b = plot_lin_reg(exp_growth,'Week','log(I(t))','figs/Q1_LinReg',linReg=True)
     print(f'Slope = {m}, Intercept = {b}')
 
 
