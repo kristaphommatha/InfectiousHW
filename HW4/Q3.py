@@ -96,9 +96,29 @@ def find_Youden(data, step):
         Jc = calc_Jc(c,data)
         Jc_list.append((c, Jc))
     max_index = max(enumerate(Jc_list), key=lambda x: x[1][1])[0]
-    max_c = Jc_list[max_index][0]
+    Youden = Jc_list[max_index]
 
-    return(max_c)
+    return(Youden)
+
+
+def plot_corr_prev(data, step, fig_title):
+    Youden = find_Youden(data, step)
+    c_list = np.arange(data['Negative Ctrl'].min(), data['Positive Ctrl'].max() + step, step)
+    corr_prev_list = []
+    for c in c_list:
+        se = calc_se(c,data)
+        sp = calc_sp(c,data)
+        if (se+sp) != 1:
+            corr_prev_list.append(calc_corr_prev(c,data))
+        else:
+            corr_prev_list.append(0)
+    fig, ax = plt.subplots()
+    ax.plot(c_list, corr_prev_list,color='black')
+    ax.plot(Youden[0],calc_corr_prev(Youden[0],data),marker='x',color='red')
+    ax.set_xlabel('c')
+    ax.set_ylabel('Corrected Prevalence')
+    ax.spines[['right', 'top']].set_visible(False)
+    plt.savefig(fig_title,dpi=300)
 
 
 def main():
@@ -109,10 +129,12 @@ def main():
     data = load_data(files_array, column_names_array, 'data/Q3data.xlsx')
     
     step = 0.1
-    c = find_Youden(data, step)
+    Youden = find_Youden(data, step)
+    c = Youden[0]
     
     plot_points_data(data, column_names_array, colors, 'Prevalence', 'figs/Q3.png', cutoff=c)
     print(f'Youden Cutoff = {c}')
+    plot_corr_prev(data, step, 'figs/Q3c.png')
 
     se = calc_se(c,data)
     sp = calc_sp(c,data)
