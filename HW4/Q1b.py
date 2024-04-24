@@ -10,7 +10,7 @@ def main():
     data = Q1a.I_from_incidence('data/all_weeks.csv')
     last_points = data.iloc[-100:]
     i_eq = last_points["I(t)"].mean()
-    m,b = Q1a.plot_lin_reg(last_points,'Week','I(t)','Q1_EQMPeriod',linReg=True)
+    m,b = Q1a.plot_lin_reg(last_points,'Week','I(t)','figs/Q1_EQMPeriod',linReg=True)
     print(f'Slope = {m}, Intercept = {b}')
     print(f'Average = {i_eq}')
 
